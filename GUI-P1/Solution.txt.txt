@@ -1,0 +1,206 @@
+HouseManager class
+clearFile(String filename): Clears the content of a file with the given filename to start with a fresh file when saving data to it.
+
+getApartments(), getParkingPlaces(), getPeople(), getVehicles(), getTenantLetters(): Getter methods that return the lists of apartments, parking places, people (tenants), vehicles, and tenant letters respectively.
+
+rentApartment(Apartment apartment, Person person, int durationInDays): Handles the process of renting an apartment to a person for a specific number of days. Initiates a new thread to handle the duration of the rent.
+
+DateUpdateThread class: An inner class that extends the Thread class and is used to advance the current date by one day.
+
+sendTenantLetter(Apartment apartment, Person person): Sends a tenant letter to a person for a specific apartment, creating a new TenantLetter object and adding it to the person's list of tenant letters and to the list of all tenant letters.
+
+checkFreeApartment(Apartment apartment, Person person): Checks if an apartment is not rented and, if so, creates a new TenantLetter for the person.
+
+removeTenantLetter(int TlId): Removes a TenantLetter with the given ID from the list of all tenant letters and from the list of the tenant's tenant letters.
+
+isVehicleStoredInGarage(String vehicleId, int parkingPlaceId): Checks if a vehicle with a given ID is stored in a garage (parking place) with a given ID.
+
+isVehicleStoredInAnyGarage(String vehicleId): Checks if a vehicle with a given ID is stored in any garage.
+
+checkVehicleInAnyGarage(String vehicleId): Returns the ID of the garage where a vehicle with a given ID is stored.
+
+isParkingPlaceRentedByTenant(String tenantId, int parkingPlaceId): Checks if a parking place with a given ID is rented by a tenant with a given ID.
+
+TooManyThingsException class: An inner class that extends the RuntimeException class and is used to handle exceptions when too many items are added to a list.
+
+rentParkingPlace(ParkingPlace parkingPlace, Person person): Handles the process of renting a parking place to a person.
+
+checkInPerson(Person person, Apartment apartment): Checks a person into an apartment if the apartment is not already rented and does not have a tenant.
+
+checkInPersonForParkingPlace(Person person, ParkingPlace parkingPlace): Checks a person into a parking place if the parking place is not already rented and does not have a tenant.
+
+checkOutVehicleFromGarage(String vehicleId, int garageId): Checks a vehicle out from a garage, finding the garage with the given ID, finding the vehicle with the given ID in the garage, and removing the vehicle from the garage
+
+ParkingPlace
+Certainly! Let's go through the methods and fields in the `ParkingPlace` class:
+
+### Fields:
+
+1. **`nextParkingPlaceId`**: A static field used to assign unique IDs to parking places incrementally.
+
+2. **`id`**: An instance field representing the unique ID of the parking place.
+
+3. **`volume`**: An instance field representing the total volume or capacity of the parking place.
+
+4. **`freeVolume`**: An instance field representing the available volume or capacity that can be used to store items or vehicles.
+
+5. **`rented`**: An instance field indicating whether the parking place is currently rented or not.
+
+6. **`tenant`**: An instance field representing the person (tenant) renting the parking place.
+
+7. **`storedItems`**: A list to store items parked in the parking place.
+
+8. **`storedVehicles`**: A list to store vehicles parked in the parking place.
+
+### Constructor:
+
+- **`ParkingPlace(double volume)`**: Initializes a parking place with a given volume. Sets ID, volume, and initializes other fields.
+
+### Methods:
+
+1. **`isSameParkingPlace(int id)`**: Checks if the provided ID matches the ID of the parking place.
+
+2. **`getId()`**: Returns the unique ID of the parking place.
+
+3. **`getVolume()`**: Returns the total volume or capacity of the parking place.
+
+4. **`isRented()`**: Returns a boolean indicating whether the parking place is currently rented.
+
+5. **`getTenant()`**: Returns the person (tenant) renting the parking place.
+
+6. **`getFreeVolume()`**: Returns the available volume or capacity for parking.
+
+7. **`setFreeVolume(double v)`**: Sets the available volume to the specified value.
+
+8. **`getStoredItems()`**: Returns the list of items stored in the parking place.
+
+9. **`getStoredVehicles()`**: Returns the list of vehicles stored in the parking place.
+
+10. **`rentTo(Person person)`**: Rents the parking place to the specified person if it's not already rented.
+
+11. **`checkOut()`**: Checks out the parking place, clearing stored items and vehicles.
+
+12. **`parkItem(Item item)`**: Parks an item in the parking place if it's rented and has enough space.
+
+13. **`parkVehicle(Ivehicle vehicle)`**: Parks a vehicle in the parking place if it's rented and has enough space.
+
+14. **`checkInForParkingPlace(Person person)`**: Checks a person into the parking place if it's not already rented.
+
+15. **`checkOutForParkingPlace()`**: Checks out the parking place for the tenant, removing the association.
+
+16. **`checkOutVehicle(Ivehicle vehicle)`**: Checks out a vehicle from the parking place.
+
+17. **`checkInVehicle(Vehicle foundVehicle)`**: Checks in a vehicle to the parking place if there is enough free volume.
+
+These methods collectively manage the state of the parking place, handle renting and checking in/out, and provide functionality for parking items and vehicles.
+
+1.	Apartments
+Fields:
+o	 nextAparmentId static integer field that holds the ID for the next apartment to be created. It starts at 1 and gets incremented each time a new apartment is created 1.
+o	 rentDate: A LocalDate object that represents the date when the apartment was rented 1.
+o	id: An integer that represents the apartment's ID 1.
+o	volume: A double that represents the volume of the apartment 1.
+o	rented: A boolean that represents whether the apartment is currently rented or not 1.
+o	tenant: A Person object that represents the tenant of the apartment. It's null if the apartment is not rented 1.
+o	durationInDays: An integer that represents the duration of the rent in days 1.
+2.	Methods:
+o	getRentDate(): Returns the date when the apartment was rented 1.
+o	setDurationInDays(int duration): Sets the duration of the rent in days 1.
+o	getDurationInDays(): Returns theThe Apartment class represents an apartment with properties such as an ID, volume, rental status, tenant, and rental duration.
+Here are the details of the methods in this class:
+1.	Apartment(double volume): This constructor initializes a new Apartment object with the given volume. It sets the apartment's ID to a unique value, its volume to the given volume, its rental status to not rented, and its tenant to null 1.
+2.	Apartment(int ID): This constructor initializes a new Apartment object with the given ID. It sets the apartment's ID to a unique value, its volume to default, its rental status to not rented, and its tenant to null 1.
+3.	Apartment(double length, double width, double height): This constructor initializes a new Apartment object with the given dimensions. It sets the apartment's ID to a unique value, its volume to the product of the given length, width, and height, its rental status to not rented, and its tenant to null 1.
+4.	getId(), getVolume(), isRented(), getTenant(): These getter methods return the apartment's ID, volume, rental status, and tenant respectively 1.
+5.	setVolume(double volume), setRented(boolean rented), setTenant(Person tenant): These setter methods update the apartment's volume, rental status, and tenant respectively 1.
+6.	displayApartmentInfo(): This method prints the apartment's ID, volume, and tenant (if the apartment is rented) or the status "Available" (if the apartment is not rented) 1.
+7.	checkOut(): This method checks out the tenant from the apartment if the apartment is currently rented. It sets the apartment's rental status to not rented and removes the apartment from the tenant's list of apartments 1.
+8.	checkIn(Person person): This method checks in a person to the apartment if the apartment is not already rented. It sets the apartment's tenant to the given person and adds the apartment to the person's list of apartments 1.
+
+
+
+
+
+Person
+
+Certainly! Let's go through the methods and fields in the Person class:
+Fields:
+1.	rentedApartmentDurations: A map to store the durations of rented apartments, where the key is the apartment ID and the value is the duration in days.
+2.	MAX_PARKING_PLACES: A constant representing the maximum number of parking places a person can rent.
+3.	MAX_APARTMENTS: A constant representing the maximum number of apartments a person can rent.
+4.	nextPersonId: A static field used to assign unique IDs to persons incrementally.
+5.	id: An instance field representing the unique ID of the person.
+6.	name, surname, IDNumber, address: Instance fields representing personal information of the person.
+7.	rentedApartments: A list to store the apartments rented by the person.
+8.	rentedParkingPlaces: A list to store the parking places rented by the person.
+9.	tenantLetters: A list to store tenant letters received by the person.
+10.	rentedApartmentIds: A list to store the IDs of rented apartments for easy checking.
+11.	rentedParkingPlaceIds: A list to store the IDs of rented parking places for easy checking.
+Constructor:
+•	Person(String name, String surname, String IDNumber, String address): Initializes a person with the provided personal information and initializes various lists and maps.
+Methods:
+1.	isSamePerson(String id): Checks if the provided ID matches the ID of the person.
+2.	getId(): Returns the unique ID of the person.
+3.	getName(), getSurname(), getIDNumber(), getAddress(): Getters for personal information of the person.
+4.	getRentedApartments(), getRentedParkingPlaces(), getTenantLetters(): Getters for the lists of rented apartments, parking places, and tenant letters.
+5.	addApartment(Apartment apartment), removeApartment(Apartment apartment): Adds or removes an apartment from the list of rented apartments.
+6.	addParkingPlace(ParkingPlace parkingPlace), removeParkingPlace(ParkingPlace parkingPlace): Adds or removes a parking place from the list of rented parking places.
+7.	rentApartment(Apartment apartment, int durationInDays): Attempts to rent an apartment for a specified duration. Checks limits and existing rentals.
+8.	isAlreadyRenting(Apartment apartment): Helper method to check if a specific apartment is already rented.
+9.	rentParkingPlace(ParkingPlace parkingPlace): Attempts to rent a parking place. Checks the limit for rented parking places.
+10.	addTenantLetter(TenantLetter letter): Adds a tenant letter to the list of tenant letters.
+These methods manage the state of a person, including renting apartments and parking places, adding tenant letters, and providing information about the person.
+
+Certainly! Let's go through the `Ivehicle` interface and the `Vehicle` class:
+
+### Interface: `Ivehicle`
+
+1. **`getName()`:** Method to get the name of the vehicle.
+
+2. **`getVolume()`:** Method to get the volume of the vehicle.
+
+3. **`getEngineCapacity()`:** Method to get the engine capacity of the vehicle.
+
+4. **`getEngineType()`:** Method to get the engine type of the vehicle.
+
+5. **`getVehicleType()`:** Method to get the type of the vehicle.
+
+6. **`getId()`:** Method to get the ID of the vehicle.
+
+7. **`displayFeatures()`:** Method to display features of the vehicle. (To be implemented by classes implementing the interface)
+
+### Class: `Vehicle`
+
+1. **Fields:**
+   - **`name`:** Represents the name of the vehicle.
+   - **`volume`:** Represents the volume of the vehicle.
+   - **`vehicleType`:** Represents the type of the vehicle, using the `VehicleType` enum.
+   - **`ID`:** Represents the ID of the vehicle.
+   - **`capacity`:** Represents the engine capacity of the vehicle.
+   - **`engine`:** Represents the engine type of the vehicle.
+   - **`inGarage`:** Represents whether the vehicle is currently in a garage.
+
+2. **Constructor:**
+   - **`Vehicle(String vehicleID, String vname, Double vvolume, Double vcapacity, String vengine, VehicleType vehicleType)`:** Initializes a vehicle with specified parameters, including vehicle type.
+
+3. **Methods:**
+   - **`isInGarage()`:** Returns whether the vehicle is currently in a garage.
+
+   - **`setInGarage(boolean inGarage)`:** Sets whether the vehicle is currently in a garage.
+
+   - **`isSameVehicle(String id)`:** Checks if the provided ID matches the ID of the vehicle.
+
+   - **`getName()`, `getVolume()`, `getEngineCapacity()`, `getEngineType()`, `getVehicleType()`, `getId()`:** Implementations of the methods from the `Ivehicle` interface.
+
+   - **`displayFeatures()`:** To be implemented by subclasses to display specific features of the vehicle.
+
+4. **Constructor Overload:**
+   - **`Vehicle(String vehicleID, String vname, Double vvolume, Double vcapacity, String vengine)`:** Initializes a vehicle without specifying its type.
+
+### Notes:
+
+- The `Vehicle` class implements the `Ivehicle` interface.
+- The `inGarage` field is used to track whether the vehicle is currently in a garage.
+- There's a constructor overload in the `Vehicle` class for cases where the type of the vehicle is not specified (for backward compatibility).
+- The `Vehicle` class includes methods to check if the vehicle is in a garage and if it is the same vehicle based on its ID.
+
